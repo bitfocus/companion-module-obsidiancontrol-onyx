@@ -11,5 +11,8 @@
     "url": "github.com/bitfocus/companion-module-obsidiancontrol-onyx"
   },
   "author": "Oliver Herrmann",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "telnet-stream": "^1.0.4"
+  }
 }
