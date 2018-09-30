@@ -98,7 +98,7 @@ instance.prototype.config_fields = function () {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'Control ONYX (formerly Martin M-Series) consoels with Companion! Enable telnet in ONYX Manager'
+			value: 'Control ONYX (formerly Martin M-Series) consoles with Companion! Enable telnet in ONYX Manager'
 		},
 		{
 			type: 'textinput',
