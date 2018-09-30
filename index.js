@@ -133,12 +133,12 @@ instance.prototype.actions = function(system) {
 	var self = this;
 	self.system.emit('instance_actions', self.id, {
 
-		'clearclear':               {label:'Clear Programmer',},
-		'release_all_overrides':    {label:'Release All Overrides',},
-		'release_all_cl':           {label:'Release All Cuelists',},
-		'release_all_cl_df':        {label:'Release All Cuelist Dimmer First',},
-		'release_all_cl_or_df':     {label:'Release All Cuelist and Override Dimmer First',},
-		'release_all_cl_or':        {label:'Release All Cuelist and Override',},
+		'clearclear':               {label:'Clear Programmer'},
+		'release_all_overrides':    {label:'Release All Overrides'},
+		'release_all_cl':           {label:'Release All Cuelists'},
+		'release_all_cl_df':        {label:'Release All Cuelist Dimmer First'},
+		'release_all_cl_or_df':     {label:'Release All Cuelist and Override Dimmer First'},
+		'release_all_cl_or':        {label:'Release All Cuelist and Override'},
 
 		'command': {
 			label:'Run Other Command',
@@ -211,9 +211,7 @@ instance.prototype.actions = function(system) {
 					 default: '',
 				}
 			]
-		},
-
-
+		}
 	});
 }
 
