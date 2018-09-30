@@ -133,12 +133,12 @@ instance.prototype.actions = function(system) {
 	var self = this;
 	self.system.emit('instance_actions', self.id, {
 
-    'clearclear':               {label:'Clear Programmer',},
-    'release_all_overrides':    {label:'Release All Overrides',},
-    'release_all_cl':           {label:'Release All Cuelists',},
-    'release_all_cl_df':        {label:'Release All Cuelist Dimmer First',},
-    'release_all_cl_or_df':     {label:'Release All Cuelist and Override Dimmer First',},
-    'release_all_cl_or':        {label:'Release All Cuelist and Override',},
+		'clearclear':               {label:'Clear Programmer',},
+		'release_all_overrides':    {label:'Release All Overrides',},
+		'release_all_cl':           {label:'Release All Cuelists',},
+		'release_all_cl_df':        {label:'Release All Cuelist Dimmer First',},
+		'release_all_cl_or_df':     {label:'Release All Cuelist and Override Dimmer First',},
+		'release_all_cl_or':        {label:'Release All Cuelist and Override',},
 
 		'command': {
 			label:'Run Other Command',
@@ -151,7 +151,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-    'go_list_cue': {
+		'go_list_cue': {
 			label:'Go Cuelist',
 			options: [
 				{
@@ -162,56 +162,56 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-    'go_schedule': {
-      label:'Go Schedule',
-      options: [
-        {
-           type: 'textinput',
-           label: 'Schedule Number',
-           id: 'schedule',
-           default: '',
-        }
-      ]
-    },
-    'pause_cuelist': {
-      label:'Pause Cuelist',
-      options: [
-        {
-           type: 'textinput',
-           label: 'Cuelist Number',
-           id: 'cuelist',
-           default: '',
-        }
-      ]
-    },
-    'release_cl': {
-      label:'Release Cuelist',
-      options: [
-        {
-           type: 'textinput',
-           label: 'Cuelist Number',
-           id: 'cuelist',
-           default: '',
-        }
-      ]
-    },
-    'go_cue': {
-      label:'Go Cue in Cuelist',
-      options: [
-        {
-           type: 'textinput',
-           label: 'Cuelist Number',
-           id: 'cuelist',
-           default: '',
-        },
-        {
-           type: 'textinput',
-           label: 'Cue Number',
-           id: 'cue',
-           default: '',
-        }
-      ]
-    },
+		'go_schedule': {
+			label:'Go Schedule',
+			options: [
+				{
+					 type: 'textinput',
+					 label: 'Schedule Number',
+					 id: 'schedule',
+					 default: '',
+				}
+			]
+		},
+		'pause_cuelist': {
+			label:'Pause Cuelist',
+			options: [
+				{
+					 type: 'textinput',
+					 label: 'Cuelist Number',
+					 id: 'cuelist',
+					 default: '',
+				}
+			]
+		},
+		'release_cl': {
+			label:'Release Cuelist',
+			options: [
+				{
+					 type: 'textinput',
+					 label: 'Cuelist Number',
+					 id: 'cuelist',
+					 default: '',
+				}
+			]
+		},
+		'go_cue': {
+			label:'Go Cue in Cuelist',
+			options: [
+				{
+					 type: 'textinput',
+					 label: 'Cuelist Number',
+					 id: 'cuelist',
+					 default: '',
+				},
+				{
+					 type: 'textinput',
+					 label: 'Cue Number',
+					 id: 'cue',
+					 default: '',
+				}
+			]
+		},
 
 
 	});
@@ -219,9 +219,8 @@ instance.prototype.actions = function(system) {
 
 instance.prototype.action = function(action) {
 	var self = this;
-	console.log("Sending some action", action);
-  var cmd
-  var opt = action.options
+	var cmd
+	var opt = action.options
 
 	switch (action.action) {
 
@@ -229,45 +228,45 @@ instance.prototype.action = function(action) {
 			cmd = action.options.command;
 			break;
 
-    case 'clearclear':
-      cmd = 'CLRCLR';
-      break;
+		case 'clearclear':
+			cmd = 'CLRCLR';
+			break;
 
 		case 'go_list_cue':
 			cmd = 'GQL ' + opt.cuelist;
-		  break;
+			break;
 
-    case 'go_schedule':
+		case 'go_schedule':
 			cmd = 'GSC ' + opt.schedule;
 			break;
 
-    case 'go_cue':
+		case 'go_cue':
 			cmd = 'GTQ ' + opt.cuelist + ',' + opt.cue;
 			break;
 
-    case 'release_all_overrides':
-      cmd = 'RAO';
-      break;
+		case 'release_all_overrides':
+			cmd = 'RAO';
+			break;
 
 		case 'release_all_cl':
 			cmd = 'RAQL'
-		  break;
+			break;
 
-    case 'release_all_cl_df':
+		case 'release_all_cl_df':
 			cmd = 'RAQLDF';
 			break;
 
-    case 'release_all_cl_or_df':
+		case 'release_all_cl_or_df':
 			cmd = 'RAQLODF';
 			break;
 
-    case 'release_all_cl_or':
+		case 'release_all_cl_or':
 			cmd = 'RAQLO';
 			break;
 
-    case 'release_cl':
-      cmd = 'RQL ' + opt.cuelist;
-      break;
+		case 'release_cl':
+			cmd = 'RQL ' + opt.cuelist;
+			break;
 
 	};
 
