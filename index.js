@@ -279,11 +279,5 @@ instance.prototype.action = function(action) {
 	}
 };
 
-instance.module_info = {
-	label: 'ONYX',
-	id: 'obsidiancontrol-onyx',
-	version: '1.0.0'
-};
-
 instance_skel.extendedBy(instance);
 exports = module.exports = instance;
