@@ -1,7 +1,7 @@
 {
-  "name": "obsidiancontrol-onyx",
+	"name": "obsidiancontrol-onyx",
 	"version": "1.0.0",
-  "description": "A Companion module to control Onyx and M-Series based lighting systems",
+	"description": "A Companion module to control Onyx and M-Series based lighting systems",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +13,8 @@
 	"product": "ONYX",
 	"shortname": "onyx",
 	"homepage": "https://www.obsidiancontrol.com",
-	"author": "Oliver Herman <oliver@monoxane.com>"
-    "dependencies": {
-    "telnet-stream": "^1.0.4"
-  }
+	"author": "Oliver Herrmann <oliver@monoxane.com>",
+	"dependencies": {
+		"telnet-stream": "^1.0.4"
+	}
 }
