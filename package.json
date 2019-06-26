@@ -8,13 +8,18 @@
 	},
 	"license": "MIT",
 	"api_version": "1.0.0",
-	"keywords": [ "Lighting" ],
-	"manufacturer": ["elation", "martin"],
+	"keywords": [
+		"Lighting"
+	],
+	"manufacturer": [
+		"elation",
+		"martin"
+	],
 	"product": "ONYX",
 	"shortname": "onyx",
 	"homepage": "https://www.obsidiancontrol.com",
 	"author": "Oliver Herrmann <oliver@monoxane.com>",
 	"dependencies": {
-		"telnet-stream": "^1.0.4"
+		"telnet-client": "^0.15.0"
 	}
 }
