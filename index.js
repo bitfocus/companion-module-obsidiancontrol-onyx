@@ -1,6 +1,6 @@
 var tcp = require('../../tcp');
 var instance_skel = require('../../instance_skel');
-var TelnetSocket = require("telnet-stream").TelnetSocket;
+var TelnetSocket = require('../../telnet');
 var debug;
 var log;
 
@@ -13,7 +13,7 @@ function instance(system, id, config) {
 	self.login = false;
 	// super-constructor
 	instance_skel.apply(this, arguments);
-	self.status(1,'Initializing');
+	self.status(self.STATUS_WARNING, 'Initializing');
 	self.actions(); // export actions
 
 	return self;
@@ -46,7 +46,7 @@ instance.prototype.init_tcp = function() {
 	}
 
 	if (self.config.host) {
-		self.socket = new tcp(self.config.host, self.config.port);
+		self.socket = new TelnetSocket(self.config.host, self.config.port);
 
 		self.socket.on('status_change', function (status, message) {
 			self.status(status, message);
@@ -62,27 +62,29 @@ instance.prototype.init_tcp = function() {
 			self.login = false;
 		});
 
-		self.telnet = new TelnetSocket(self.socket.socket);
-
 		self.socket.on('error', function (err) {
 			debug("Network error", err);
 			self.log('error',"Network error: " + err.message);
 		});
 
 		// if we get any data, display it to stdout
-		self.telnet.on("data", function(buffer) {
+		self.socket.on("data", function(buffer) {
 			var indata = buffer.toString("utf8");
 			// self.incomingData(indata);
 		});
 
-		// tell remote we WONT do anything we're asked to DO
-		self.telnet.on("do", function(option) {
-			return self.telnet.writeWont(option);
-		});
+		self.socket.on("do", function(type, info) {
 
-		// tell the remote DONT do whatever they WILL offer
-		self.telnet.on("will", function(option) {
-			return self.telnet.writeDont(option);
+			// tell remote we WONT do anything we're asked to DO
+			if (type == 'DO') {
+				self.socket.write(new Buffer([ 255, 252, info ]));
+			}
+
+			// tell the remote DONT do whatever they WILL offer
+			if (type == 'WILL') {
+				self.socket.write(new Buffer([ 255, 254, info ]));
+			}
+
 		});
 
 	}
@@ -271,7 +273,7 @@ instance.prototype.action = function(action) {
 	if (cmd !== undefined) {
 
 		if (self.socket !== undefined && self.socket.connected) {
-			self.telnet.write(cmd+"\r\n");
+			self.socket.write(cmd+"\r\n");
 		} else {
 			debug('Socket not connected :(');
 		}
