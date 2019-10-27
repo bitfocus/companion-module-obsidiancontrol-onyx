@@ -74,9 +74,9 @@ instance.prototype.init_tcp = function() {
 		// if we get any data, display it to stdout
 		self.socket.on("data", function(buffer) {
 			var indata = buffer.toString("utf8");
-			self.buffe += indata;
+			self.buffer += indata;
 
-			var lines = indata.split("\r\n");
+			var lines = self.buffer.split("\r\n");
 			if (lines.indexOf('.') === -1) {
 				return;
 			}
