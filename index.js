@@ -96,9 +96,7 @@ instance.prototype.init_tcp = function() {
 						}
 						break;
 				}
-				console.log(line);
 			});
-			console.log(self.activeCuelists);
 			self.checkFeedbacks("cuelist_active");
 		});
 
