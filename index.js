@@ -1,6 +1,6 @@
-var tcp = require('../../tcp');
-var instance_skel = require('../../instance_skel');
-var TelnetSocket = require('../../telnet');
+var tcp = require("../../tcp");
+var instance_skel = require("../../instance_skel");
+var TelnetSocket = require("../../telnet");
 
 var debug;
 var log;
@@ -12,7 +12,7 @@ function instance(system, id, config) {
 	self.request_id = 0;
 	// super-constructor
 	instance_skel.apply(this, arguments);
-	self.status(self.STATUS_WARNING, 'Initializing');
+	self.status(self.STATUS_WARNING, "Initializing");
 	self.actions(); // export actions
 
 	self.activeCuelists = [];
@@ -38,7 +38,7 @@ instance.prototype.init = function() {
 
 instance.prototype.init_tcp = function() {
 	var self = this;
-	self.buffer = '';
+	self.buffer = "";
 
 	if (self.socket !== undefined) {
 		self.socket.destroy();
@@ -48,27 +48,25 @@ instance.prototype.init_tcp = function() {
 	if (self.config.host) {
 		self.socket = new TelnetSocket(self.config.host, self.config.port);
 
-		self.socket.on('status_change', function (status, message) {
+		self.socket.on("status_change", function(status, message) {
 			self.status(status, message);
 		});
 
-		self.socket.on('connect', function () {
+		self.socket.on("connect", function() {
 			if (self.config.polling_interval > 0) {
 				if (self.pollTimer) {
 					clearInterval(self.pollTimer);
 				}
 
-				self.pollTimer = setInterval(function () {
+				self.pollTimer = setInterval(function() {
 					self.pollActiveCuelists();
-				},
-					self.config.polling_interval
-				);
+				}, self.config.polling_interval);
 			}
 		});
 
-		self.socket.on('error', function (err) {
+		self.socket.on("error", function(err) {
 			debug("Network error", err);
-			self.log('error',"Network error: " + err.message);
+			self.log("error", "Network error: " + err.message);
 		});
 
 		// if we get any data, display it to stdout
@@ -77,7 +75,7 @@ instance.prototype.init_tcp = function() {
 			self.buffer += indata;
 
 			var lines = self.buffer.split("\r\n");
-			if (lines.indexOf('.') === -1) {
+			if (lines.indexOf(".") === -1) {
 				return;
 			}
 
@@ -86,32 +84,32 @@ instance.prototype.init_tcp = function() {
 					// Ignore lines that aren't part of the active cuelist list.
 					case "200 Ok":
 					case "200 ":
-					case ".":
 					case "":
 					case "No Active Qlist in List":
 						break;
+					case ".":
+						self.buffer = "";
 					default:
 						var id = parseInt(line.substring(0, 5));
-						self.activeCuelists.push(id);
+						if (!isNaN(id)) {
+							self.activeCuelists.push(id);
+						}
 						break;
 				}
 			});
-
 			self.checkFeedbacks("cuelist_active");
 		});
 
 		self.socket.on("do", function(type, info) {
-
 			// tell remote we WONT do anything we're asked to DO
-			if (type == 'DO') {
-				self.socket.write(new Buffer([ 255, 252, info ]));
+			if (type == "DO") {
+				self.socket.write(new Buffer([255, 252, info]));
 			}
 
 			// tell the remote DONT do whatever they WILL offer
-			if (type == 'WILL') {
-				self.socket.write(new Buffer([ 255, 254, info ]));
+			if (type == "WILL") {
+				self.socket.write(new Buffer([255, 254, info]));
 			}
-
 		});
 	}
 };
@@ -122,7 +120,7 @@ instance.prototype.pollActiveCuelists = function() {
 	self.gettingActiveQL = true;
 	self.activeCuelists = [];
 
-	self.write("QLActive\r\n");
+	self.socket.write("QLActive\r\n");
 };
 
 // Return config fields for web config
@@ -173,14 +171,14 @@ instance.prototype.destroy = function() {
 	}
 
 	if (self.socket !== undefined) {
-			self.socket.destroy();
-			delete self.socket;
+		self.socket.destroy();
+		delete self.socket;
 	}
 
 	debug("destroy", self.id);
 };
 
-instance.prototype.actions = function () {
+instance.prototype.actions = function() {
 	var self = this;
 
 	self.setActions({
