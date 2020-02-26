@@ -1,6 +1,6 @@
 var tcp = require("../../tcp");
 var instance_skel = require("../../instance_skel");
-var TelnetSocket = require("../../telnet");
+var TcpSocket = require("../../tcp");
 
 var debug;
 var log;
@@ -46,7 +46,7 @@ instance.prototype.init_tcp = function() {
 	}
 
 	if (self.config.host) {
-		self.socket = new TelnetSocket(self.config.host, self.config.port);
+		self.socket = new TcpSocket(self.config.host, self.config.port);
 
 		self.socket.on("status_change", function(status, message) {
 			self.status(status, message);
@@ -75,6 +75,7 @@ instance.prototype.init_tcp = function() {
 			self.buffer += indata;
 
 			var lines = self.buffer.split("\r\n");
+
 			if (lines.indexOf(".") === -1) {
 				return;
 			}
@@ -98,18 +99,6 @@ instance.prototype.init_tcp = function() {
 				}
 			});
 			self.checkFeedbacks("cuelist_active");
-		});
-
-		self.socket.on("do", function(type, info) {
-			// tell remote we WONT do anything we're asked to DO
-			if (type == "DO") {
-				self.socket.write(new Buffer([255, 252, info]));
-			}
-
-			// tell the remote DONT do whatever they WILL offer
-			if (type == "WILL") {
-				self.socket.write(new Buffer([255, 254, info]));
-			}
 		});
 	}
 };
