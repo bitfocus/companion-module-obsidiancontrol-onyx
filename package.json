@@ -17,6 +17,13 @@
 	],
 	"product": "ONYX",
 	"shortname": "onyx",
-	"homepage": "https://www.obsidiancontrol.com",
-	"author": "Oliver Herrmann <oliver@monoxane.com>"
+	"homepage": "https://github.com/bitfocus/companion-module-obsidiancontrol-onyx#readme",
+	"author": "Oliver Herrmann <oliver@monoxane.com>",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-obsidiancontrol-onyx/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-obsidiancontrol-onyx.git"
+	}
 }
