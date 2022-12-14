@@ -195,10 +195,11 @@ instance.prototype.actions = function() {
 			label: "Run Other Command",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Command",
 					id: "command",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -206,10 +207,11 @@ instance.prototype.actions = function() {
 			label: "Go Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -217,10 +219,11 @@ instance.prototype.actions = function() {
 			label: "Go Schedule",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Schedule Number",
 					id: "schedule",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -228,10 +231,11 @@ instance.prototype.actions = function() {
 			label: "Pause Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -239,10 +243,11 @@ instance.prototype.actions = function() {
 			label: "Release Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -250,16 +255,18 @@ instance.prototype.actions = function() {
 			label: "Go Cue in Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				},
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cue Number",
 					id: "cue",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		}
