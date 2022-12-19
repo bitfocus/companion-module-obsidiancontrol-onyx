@@ -1,6 +1,6 @@
 {
 	"name": "obsidiancontrol-onyx",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "A Companion module to control Onyx and M-Series based lighting systems",
 	"main": "index.js",
 	"scripts": {
@@ -11,10 +11,7 @@
 	"keywords": [
 		"Lighting"
 	],
-	"manufacturer": [
-		"elation",
-		"martin"
-	],
+	"manufacturer": "obsidiancontrol",
 	"product": "ONYX",
 	"shortname": "onyx",
 	"homepage": "https://github.com/bitfocus/companion-module-obsidiancontrol-onyx#readme",
