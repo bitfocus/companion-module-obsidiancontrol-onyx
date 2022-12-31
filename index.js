@@ -195,10 +195,11 @@ instance.prototype.actions = function() {
 			label: "Run Other Command",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Command",
 					id: "command",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -206,10 +207,11 @@ instance.prototype.actions = function() {
 			label: "Go Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -217,10 +219,11 @@ instance.prototype.actions = function() {
 			label: "Go Schedule",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Schedule Number",
 					id: "schedule",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -228,10 +231,11 @@ instance.prototype.actions = function() {
 			label: "Pause Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -239,10 +243,11 @@ instance.prototype.actions = function() {
 			label: "Release Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		},
@@ -250,16 +255,18 @@ instance.prototype.actions = function() {
 			label: "Go Cue in Cuelist",
 			options: [
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cuelist Number",
 					id: "cuelist",
-					default: ""
+					default: "",
+					useVariables: true
 				},
 				{
-					type: "textinput",
+					type: "textwithvariables",
 					label: "Cue Number",
 					id: "cue",
-					default: ""
+					default: "",
+					useVariables: true
 				}
 			]
 		}
@@ -270,10 +277,15 @@ instance.prototype.action = function(action) {
 	var self = this;
 	var cmd;
 	var opt = action.options;
+	let eval_1
+	let eval_2
 
 	switch (action.action) {
 		case "command":
-			cmd = action.options.command;
+			self.system.emit('variable_parse', opt.command, function (value) {
+				eval_1 = value
+			})
+			cmd = eval_1;
 			break;
 
 		case "clearclear":
@@ -281,15 +293,28 @@ instance.prototype.action = function(action) {
 			break;
 
 		case "go_list_cue":
-			cmd = "GQL " + opt.cuelist;
+			self.system.emit('variable_parse', opt.cuelist, function (value) {
+				eval_1 = value
+			})
+			cmd = "GQL " + eval_1;
 			break;
 
 		case "go_schedule":
-			cmd = "GSC " + opt.schedule;
+			self.system.emit('variable_parse', opt.schedule, function (value) {
+				eval_1 = value
+			})
+			cmd = "GSC " + eval_1;
 			break;
 
 		case "go_cue":
-			cmd = "GTQ " + opt.cuelist + "," + opt.cue;
+
+			self.system.emit('variable_parse', opt.cuelist, function (value) {
+				eval_1 = value
+			})
+			self.system.emit('variable_parse', opt.cue, function (value) {
+				eval_2 = value
+			})
+			cmd = "GTQ " + eval_1 + "," + eval_2;
 			break;
 
 		case "release_all_overrides":
@@ -313,11 +338,16 @@ instance.prototype.action = function(action) {
 			break;
 
 		case "release_cl":
-			cmd = "RQL " + opt.cuelist;
+			self.system.emit('variable_parse', opt.cuelist, function (value) {
+				eval_1 = value
+			})
+			cmd = "RQL " + eval_1;
 			break;
 	}
 
 	if (cmd !== undefined) {
+		console.log('command')
+		console.log(cmd)
 		if (self.socket !== undefined && self.socket.connected) {
 			self.socket.write(cmd + "\r\n");
 		} else {
