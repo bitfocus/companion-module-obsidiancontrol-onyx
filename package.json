@@ -1,6 +1,6 @@
 {
 	"name": "obsidiancontrol-onyx",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "A Companion module to control Onyx and M-Series based lighting systems",
 	"main": "index.js",
 	"scripts": {
