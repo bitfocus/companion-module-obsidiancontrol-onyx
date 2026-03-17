@@ -1,5 +1,6 @@
 import { InstanceBase, InstanceStatus } from "@companion-module/base";
 import { configFields } from "./src/config";
+import { upgradeScripts } from './src/upgrades.js'
 
 export default class ModuleInstance extends InstanceBase {
 	constructor(internal) {
