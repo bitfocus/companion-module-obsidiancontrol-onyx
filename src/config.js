@@ -25,11 +25,12 @@ export const configFields = [
         default: "2323"
     },
     {
-        type: "textinput",
+        type: "number",
         id: "polling_interval",
         label: "Polling Interval (ms)",
         width: 4,
         regex: Regex.NUMBER,
-        default: "5000"
+        default: "5000",
+        min: 100,
     }
 ]
