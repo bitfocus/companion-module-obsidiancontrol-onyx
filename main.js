@@ -1,10 +1,12 @@
 import { InstanceBase, InstanceStatus } from "@companion-module/base";
 import { configFields } from "./src/config";
 import { upgradeScripts } from './src/upgrades.js'
+import { createTelnetClient } from "./src/telnet/client.js";
 
 export default class ModuleInstance extends InstanceBase {
 	constructor(internal) {
 		super(internal)
+		this.activeCuelists = []
 	}
 
 	async init(config) {
@@ -22,18 +24,27 @@ export default class ModuleInstance extends InstanceBase {
 	}
 
 	// When module gets deleted or deactivated
-	async destroy() {
-		// close Telnet client
+	async destroy () {
+		if (this.socket) {
+			this.socket.destroy()
+			delete this.socket
+		}
 
-		this.updateStatus(InstanceStatus.Disconnected)
-
-		this.log('debug', 'destroy')
+		this.log('debug', 'Onyx module instance destroyed.')
 	}
 
 	async configUpdated(config) {
+		if (self.socket) {
+			self.socket.destroy()
+			self.socket = null
+		}
+
 		this.config = config
 
 		// Re-establish Telnet client
+		if (self.config.host) {
+			createTelnetClient(self)
+		}
 	}
 
 	// Return config fields for web config
@@ -61,12 +72,9 @@ export default class ModuleInstance extends InstanceBase {
 export const UpgradeScripts = upgradeScripts
 
 
-var tcp = require("../../tcp");
 var instance_skel = require("../../instance_skel");
-var TelnetSocket = require("../../telnet");
 
 var debug;
-var log;
 
 function instance(system, id, config) {
 	var self = this;
@@ -83,99 +91,6 @@ function instance(system, id, config) {
 	return self;
 }
 
-instance.prototype.updateConfig = function(config) {
-	var self = this;
-	self.config = config;
-	self.init_tcp();
-};
-
-instance.prototype.init = function() {
-	var self = this;
-
-	debug = self.debug;
-	log = self.log;
-
-	self.init_tcp();
-	self.init_feedbacks();
-};
-
-instance.prototype.init_tcp = function() {
-	var self = this;
-	self.buffer = "";
-
-	if (self.socket !== undefined) {
-		self.socket.destroy();
-		delete self.socket;
-	}
-
-	if (self.config.host) {
-		self.socket = new TelnetSocket(self.config.host, self.config.port);
-
-		self.socket.on("status_change", function(status, message) {
-			self.status(status, message);
-		});
-
-		self.socket.on("connect", function() {
-			if (self.config.polling_interval > 0) {
-				if (self.pollTimer) {
-					clearInterval(self.pollTimer);
-				}
-
-				self.pollTimer = setInterval(function() {
-					self.pollActiveCuelists();
-				}, self.config.polling_interval);
-			}
-		});
-
-		self.socket.on("error", function(err) {
-			debug("Network error", err);
-			self.log("error", "Network error: " + err.message);
-		});
-
-		// if we get any data, display it to stdout
-		self.socket.on("data", function(buffer) {
-			var indata = buffer.toString("utf8");
-			self.buffer += indata;
-
-			var lines = self.buffer.split("\r\n");
-			if (lines.indexOf(".") === -1) {
-				return;
-			}
-
-			lines.forEach(function each(line) {
-				switch (line) {
-					// Ignore lines that aren't part of the active cuelist list.
-					case "200 Ok":
-					case "200 ":
-					case "":
-					case "No Active Qlist in List":
-						break;
-					case ".":
-						self.buffer = "";
-					default:
-						var id = parseInt(line.substring(0, 5));
-						if (!isNaN(id)) {
-							self.activeCuelists.push(id);
-						}
-						break;
-				}
-			});
-			self.checkFeedbacks("cuelist_active");
-		});
-
-		self.socket.on("do", function(type, info) {
-			// tell remote we WONT do anything we're asked to DO
-			if (type == "DO") {
-				self.socket.write(Buffer.from([255, 252, info]));
-			}
-
-			// tell the remote DONT do whatever they WILL offer
-			if (type == "WILL") {
-				self.socket.write(Buffer.from([255, 254, info]));
-			}
-		});
-	}
-};
 
 instance.prototype.pollActiveCuelists = function() {
 	var self = this;
@@ -184,28 +99,6 @@ instance.prototype.pollActiveCuelists = function() {
 	self.activeCuelists = [];
 
 	self.socket.write("QLActive\r\n");
-};
-
-// Return config fields for web config
-instance.prototype.config_fields = function() {
-
-};
-
-// When module gets deleted
-instance.prototype.destroy = function() {
-	var self = this;
-
-	if (self.pollTimer) {
-		clearInterval(self.pollTimer);
-		delete self.pollTimer;
-	}
-
-	if (self.socket !== undefined) {
-		self.socket.destroy();
-		delete self.socket;
-	}
-
-	debug("destroy", self.id);
 };
 
 instance.prototype.actions = function() {
@@ -399,5 +292,3 @@ instance.prototype.feedback = function(feedback, bank) {
 	}
 };
 
-instance_skel.extendedBy(instance);
-exports = module.exports = instance;
