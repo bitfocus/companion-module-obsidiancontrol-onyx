@@ -1,3 +1,65 @@
+import { InstanceBase, InstanceStatus } from "@companion-module/base";
+import { configFields } from "./src/config";
+
+export default class ModuleInstance extends InstanceBase {
+	constructor(internal) {
+		super(internal)
+	}
+
+	async init(config) {
+		// The following runs when the module is opened for the first time or when the config is changed
+		this.config = config
+
+		await this.configUpdated(config)
+
+		this.updateStatus(InstanceStatus.Ok)
+
+		this.updateActions() // export actions
+		this.updateFeedbacks() // export feedbacks
+		this.updateVariableDefinitions() // export variable definitions
+		this.updatePresetDefinitions()
+	}
+
+	// When module gets deleted or deactivated
+	async destroy() {
+		// close Telnet client
+
+		this.updateStatus(InstanceStatus.Disconnected)
+
+		this.log('debug', 'destroy')
+	}
+
+	async configUpdated(config) {
+		this.config = config
+
+		// Re-establish Telnet client
+	}
+
+	// Return config fields for web config
+	getConfigFields() {
+		return configFields
+	}
+
+	updateActions() {
+		UpdateActions(this)
+	}
+
+	updateFeedbacks() {
+		UpdateFeedbacks(this)
+	}
+
+	updateVariableDefinitions() {
+		UpdateVariableDefinitions(this)
+	}
+
+	updatePresetDefinitions() {
+		UpdatePresetDefinitions(this)
+	}
+}
+
+export const UpgradeScripts = upgradeScripts
+
+
 var tcp = require("../../tcp");
 var instance_skel = require("../../instance_skel");
 var TelnetSocket = require("../../telnet");
@@ -125,40 +187,7 @@ instance.prototype.pollActiveCuelists = function() {
 
 // Return config fields for web config
 instance.prototype.config_fields = function() {
-	var self = this;
 
-	return [
-		{
-			type: "text",
-			id: "info",
-			width: 12,
-			label: "Information",
-			value:
-				"Control ONYX (formerly Martin M-Series) consoles with Companion! Enable telnet in ONYX Manager"
-		},
-		{
-			type: "textinput",
-			id: "host",
-			label: "ONYX Console IP",
-			width: 6,
-			default: "192.168.0.1",
-			regex: self.REGEX_IP
-		},
-		{
-			type: "textinput",
-			id: "port",
-			label: "Port",
-			width: 6,
-			default: "2323"
-		},
-		{
-			type: "textinput",
-			id: "polling_interval",
-			label: "Polling Interval (ms)",
-			width: 4,
-			default: "5000"
-		}
-	];
 };
 
 // When module gets deleted
