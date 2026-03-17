@@ -1,26 +1,28 @@
 {
-	"name": "obsidiancontrol-onyx",
-	"version": "1.0.5",
-	"description": "A Companion module to control Onyx and M-Series based lighting systems",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"license": "MIT",
-	"api_version": "1.0.0",
-	"keywords": [
-		"Lighting"
-	],
-	"manufacturer": "obsidiancontrol",
-	"product": "ONYX",
-	"shortname": "onyx",
-	"homepage": "https://github.com/bitfocus/companion-module-obsidiancontrol-onyx#readme",
-	"author": "Oliver Herrmann <oliver@monoxane.com>",
-	"bugs": {
-		"url": "https://github.com/bitfocus/companion-module-obsidiancontrol-onyx/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/bitfocus/companion-module-obsidiancontrol-onyx.git"
-	}
+  "name": "obsidiancontrol-onyx",
+  "version": "2.0.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "format": "prettier -w .",
+    "package": "companion-module-build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfocus/companion-module-obsidiancontrol-onyx.git"
+  },
+  "engines": {
+    "node": "^22.20",
+    "yarn": "^4"
+  },
+  "packageManager": "yarn@4.13.0",
+  "dependencies": {
+    "@companion-module/base": "~1.12.1"
+  },
+  "devDependencies": {
+    "@companion-module/tools": "^2.4.2",
+    "prettier": "^3.8.1"
+  },
+  "prettier": "@companion-module/tools/.prettierrc.json"
 }
