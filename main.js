@@ -1,5 +1,5 @@
-import { InstanceBase, InstanceStatus } from "@companion-module/base";
-import { configFields } from "./src/config";
+import { InstanceBase, InstanceStatus } from '@companion-module/base'
+import { configFields } from './src/config.js'
 import { upgradeScripts } from './src/upgrades.js'
 import { createTelnetClient } from "./src/telnet/client.js";
 
