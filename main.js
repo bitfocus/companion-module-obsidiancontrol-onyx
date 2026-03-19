@@ -5,6 +5,7 @@ import { createTelnetClient } from './src/telnet/client.js'
 import { UpdateActions } from './src/actions.js'
 import { UpdateVariableDefinitions } from './src/variables.js'
 import { UpdatePresetDefinitions } from './src/presets.js'
+import { UpdateFeedbacks } from './src/feedbacks.js'
 
 export default class ModuleInstance extends InstanceBase {
 	constructor(internal) {
@@ -21,7 +22,7 @@ export default class ModuleInstance extends InstanceBase {
 		this.updateStatus(InstanceStatus.Ok)
 
 		this.updateActions() // export actions
-		// this.updateFeedbacks() // export feedbacks
+		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
 		this.updatePresetDefinitions()
 	}
@@ -59,9 +60,9 @@ export default class ModuleInstance extends InstanceBase {
 		UpdateActions(this)
 	}
 
-	// updateFeedbacks() {
-	// 	UpdateFeedbacks(this)
-	// }
+	updateFeedbacks() {
+		UpdateFeedbacks(this)
+	}
 
 	updateVariableDefinitions() {
 		UpdateVariableDefinitions(this)
