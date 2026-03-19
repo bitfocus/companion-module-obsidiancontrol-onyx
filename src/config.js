@@ -31,7 +31,7 @@ export const configFields = [
 		label: 'Polling Interval (ms)',
 		width: 4,
 		regex: Regex.NUMBER,
-		default: '5000',
+		default: 5000,
 		min: 100,
 	},
 ]

@@ -1,5 +1,22 @@
 import { InstanceStatus, TelnetHelper } from '@companion-module/base'
 
+// Function to send Telnet command to Onyx console
+export async function sendCommand(cmd, self) {
+	try {
+		self.socket.send(cmd + '\r\n')
+		self.log('info', `Command sent: ${cmd}`)
+	} catch (err) {
+		self.log('error', `Error when sending command ${cmd}: ${err}`)
+	}
+}
+
+function getActiveCuelists(self) {
+	self.activeCuelists = []
+	if (self.socket && self.socket.isConnected) {
+		sendCommand('QLActive', self)
+	}
+}
+
 // Function to parse incoming data
 function parseData(self, buffer) {
 	const data = buffer.toString('utf8')
@@ -11,6 +28,7 @@ function parseData(self, buffer) {
 			self.buffer = ''
 		} else if (!isNaN(parseInt(line))) {
 			self.activeCuelists.push(parseInt(line))
+			self.checkFeedbacks('ActiveCuelist') // Update feedbacks after active cuelist data received
 		}
 	}
 	self.log('debug', `Received data: ${data}`)
@@ -29,6 +47,16 @@ export function createTelnetClient(self) {
 	self.socket.on('connect', () => {
 		self.log('debug', 'Connected to Onyx console')
 		self.updateStatus(InstanceStatus.Ok)
+
+		// Start polling for active cuelists
+		if (self.pollTimer) {
+			clearInterval(self.pollTimer)
+		}
+
+		self.log('debug', `Polling interval: ${self.config.polling_interval}`)
+		self.pollTimer = setInterval(() => {
+			getActiveCuelists(self)
+		}, self.config.polling_interval);
 	})
 
 	self.socket.on('error', (err) => {

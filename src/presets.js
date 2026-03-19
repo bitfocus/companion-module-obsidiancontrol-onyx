@@ -40,7 +40,18 @@ export function UpdatePresetDefinitions (self) {
             localVariables: [
                 { variableType: 'simple', variableName: 'cuelist', startupValue: 1 },
             ],
-            feedbacks: [],
+            feedbacks: [
+                {
+                    feedbackId: 'ActiveCuelist',
+                    options: {
+                        cuelist: { isExpression: true, value: `$(local:cuelist)` },
+                    },
+                    style: {
+                        bgcolor: colors.red,
+                        color: colors.black
+                    }
+                }
+            ],
         }
     }
 

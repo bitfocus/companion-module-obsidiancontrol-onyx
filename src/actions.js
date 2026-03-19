@@ -1,13 +1,6 @@
-export function UpdateActions(self) {
-	async function sendCommand(cmd) {
-		try {
-			self.socket.send(cmd + '\r\n')
-			self.log('info', `Command sent: ${cmd}`)
-		} catch (err) {
-			self.log('error', `Error when sending command ${cmd}: ${err}`)
-		}
-	}
+import { sendCommand } from './telnet/client.js'
 
+export function UpdateActions(self) {
 	let actions = {}
 
 	// Cuelist actions
@@ -22,7 +15,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`GQL ${event.options.cuelist}`)
+			sendCommand(`GQL ${event.options.cuelist}`, self)
 		},
 	}
 
@@ -43,7 +36,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`GTQ ${event.options.cuelist},${event.options.cue}`)
+			sendCommand(`GTQ ${event.options.cuelist},${event.options.cue}`, self)
 		},
 	}
 
@@ -58,7 +51,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`PQL ${event.options.cuelist}`)
+			sendCommand(`PQL ${event.options.cuelist}`, self)
 		},
 	}
 
@@ -73,7 +66,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`RQL ${event.options.cuelist}`)
+			sendCommand(`RQL ${event.options.cuelist}`, self)
 		},
 	}
 
@@ -96,7 +89,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`SQL ${event.options.cuelist},${event.options.level}`)
+			sendCommand(`SQL ${event.options.cuelist},${event.options.level}`, self)
 		},
 	}
 
@@ -112,7 +105,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`GSC ${event.options.schedule}`)
+			sendCommand(`GSC ${event.options.schedule}`, self)
 		},
 	}
 
@@ -120,7 +113,7 @@ export function UpdateActions(self) {
 	actions.clearProgrammer = {
 		name: 'Clear Programmer',
 		callback: async () => {
-			sendCommand('CLRCLR')
+			sendCommand('CLRCLR', self)
 		},
 	}
 
@@ -128,7 +121,7 @@ export function UpdateActions(self) {
 	actions.releaseOverides = {
 		name: 'Release All Overides',
 		callback: async () => {
-			sendCommand('RAO')
+			sendCommand('RAO', self)
 		},
 	}
 
@@ -143,14 +136,14 @@ export function UpdateActions(self) {
 		],
 		callback: async (event) => {
 			let cmd = event.options.dimFirst ? 'RAQLDF' : 'RAQL'
-			sendCommand(cmd)
+			sendCommand(cmd, self)
 		},
 	}
 
 	actions.releaseAll = {
 		name: 'Release All Cuelists and Overides',
 		callback: async () => {
-			sendCommand('RAQLO')
+			sendCommand('RAQLO', self)
 		},
 	}
 
