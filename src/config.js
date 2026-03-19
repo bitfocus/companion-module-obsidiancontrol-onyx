@@ -6,9 +6,8 @@ export const configFields = [
 		id: 'info',
 		width: 12,
 		label: 'Information',
-		value: 
-            'Control ONYX consoles with Companion! ' +
-            'Enable telnet in ONYX Manager',
+		value:
+			'This module allows control of Onyx lighting consoles and PC setups using Telnet. Onyx has two different Telnet server setups, one through the lighting software itself and a second through a bundled utility called Onyx Manager. The Telnet capabilities of each are slightly different, and this module offers the capabilities of both, although you will need to enable both servers (on seperate ports) to make full use of this module.',
 	},
 	{
 		type: 'textinput',
@@ -24,6 +23,11 @@ export const configFields = [
 		width: 6,
 		regex: Regex.PORT,
 		default: '2323',
+	},
+	{
+		type: 'checkbox',
+		id: 'usingManager',
+		label: 'Check if using ONYX Manager',
 	},
 	{
 		type: 'number',

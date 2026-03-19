@@ -1,3 +1,3 @@
-export function UpdateVariableDefinitions(self){
-    self.setVariableDefinitions({})
+export function UpdateVariableDefinitions(self) {
+	self.setVariableDefinitions({})
 }

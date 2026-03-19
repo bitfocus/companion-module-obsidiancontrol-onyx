@@ -22,13 +22,6 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Obsidian",
-	"products": [
-		"ONYX"
-	],
-	"keywords": [
-		"onyx",
-		"lighting",
-		"control"
-	]
+	"products": ["ONYX"],
+	"keywords": ["onyx", "lighting", "control"]
 }
- 

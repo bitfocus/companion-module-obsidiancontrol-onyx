@@ -95,7 +95,7 @@ export function UpdateActions(self) {
 
 	// Schedule actions
 	actions.goSchedule = {
-		name: 'Go Schedule',
+		name: 'Go Schedule (ONYX Manager)',
 		options: [
 			{
 				id: 'schedule',
@@ -105,7 +105,11 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			sendCommand(`GSC ${event.options.schedule}`, self)
+			if (self.config.usingManager) {
+				sendCommand(`GSC ${event.options.schedule}`, self)
+			} else {
+				self.log('info', 'Module not set up to use ONYX Manager. Please check config.')
+			}
 		},
 	}
 
@@ -127,16 +131,17 @@ export function UpdateActions(self) {
 
 	actions.releaseCuelists = {
 		name: 'Release All Cuelists',
-		options: [
-			{
-				id: 'dimFirst',
-				type: 'checkbox',
-				label: 'Release Dimmer First',
-			},
-		],
+		options: [],
 		callback: async (event) => {
-			let cmd = event.options.dimFirst ? 'RAQLDF' : 'RAQL'
-			sendCommand(cmd, self)
+			sendCommand('RAQL', self)
+		},
+	}
+
+	actions.releaseCuelistsDimFirst = {
+		name: 'Release All Cuelists Dimmer First',
+		options: [],
+		callback: async (event) => {
+			sendCommand('RAQLDF', self)
 		},
 	}
 

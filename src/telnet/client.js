@@ -48,15 +48,17 @@ export function createTelnetClient(self) {
 		self.log('debug', 'Connected to Onyx console')
 		self.updateStatus(InstanceStatus.Ok)
 
-		// Start polling for active cuelists
-		if (self.pollTimer) {
-			clearInterval(self.pollTimer)
-		}
+		// Start polling for active cuelists, only if using ONYX Manager
+		if (self.config.usingManager) {
+			if (self.pollTimer) {
+				clearInterval(self.pollTimer)
+			}
 
-		self.log('debug', `Polling interval: ${self.config.polling_interval}`)
-		self.pollTimer = setInterval(() => {
-			getActiveCuelists(self)
-		}, self.config.polling_interval);
+			self.log('debug', `Polling interval: ${self.config.polling_interval}`)
+			self.pollTimer = setInterval(() => {
+				getActiveCuelists(self)
+			}, self.config.polling_interval)
+		}
 	})
 
 	self.socket.on('error', (err) => {
