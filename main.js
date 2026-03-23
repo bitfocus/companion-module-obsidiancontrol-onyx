@@ -1,13 +1,13 @@
-import { InstanceBase, InstanceStatus } from '@companion-module/base'
+import { InstanceBase, InstanceStatus, runEntrypoint } from '@companion-module/base'
 import { configFields } from './src/config.js'
 import { upgradeScripts } from './src/upgrades.js'
 import { createTelnetClient } from './src/telnet/client.js'
 import { UpdateActions } from './src/actions.js'
-import { UpdateVariableDefinitions } from './src/variables.js'
-import { UpdatePresetDefinitions } from './src/presets.js'
+// import { UpdateVariableDefinitions } from './src/variables.js'
+// import { UpdatePresetDefinitions } from './src/presets.js'
 import { UpdateFeedbacks } from './src/feedbacks.js'
 
-export default class ModuleInstance extends InstanceBase {
+class ModuleInstance extends InstanceBase {
 	constructor(internal) {
 		super(internal)
 		this.activeCuelists = []
@@ -23,8 +23,8 @@ export default class ModuleInstance extends InstanceBase {
 
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
-		this.updateVariableDefinitions() // export variable definitions
-		this.updatePresetDefinitions()
+		// this.updateVariableDefinitions() // export variable definitions
+		// this.updatePresetDefinitions()
 	}
 
 	// When module gets deleted or deactivated
@@ -65,13 +65,13 @@ export default class ModuleInstance extends InstanceBase {
 		UpdateFeedbacks(this)
 	}
 
-	updateVariableDefinitions() {
-		UpdateVariableDefinitions(this)
-	}
+	// updateVariableDefinitions() {
+	// 	UpdateVariableDefinitions(this)
+	// }
 
-	updatePresetDefinitions() {
-		UpdatePresetDefinitions(this)
-	}
+	// updatePresetDefinitions() {
+	// 	UpdatePresetDefinitions(this)
+	// }
 }
 
-export const UpgradeScripts = upgradeScripts
+runEntrypoint(ModuleInstance, upgradeScripts)

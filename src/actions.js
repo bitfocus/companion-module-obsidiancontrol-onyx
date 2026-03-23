@@ -32,13 +32,15 @@ export function UpdateActions(self) {
 			},
 			{
 				id: 'cuelist',
-				type: 'number',
+				type: 'textinput',
+				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
 			},
 			{
 				id: 'cue',
 				type: 'textinput',
+				useVariables: true,
 				label: 'Cue Number',
 				default: 1,
 			},
@@ -53,7 +55,8 @@ export function UpdateActions(self) {
 		options: [
 			{
 				id: 'cuelist',
-				type: 'number',
+				type: 'textinput',
+				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
 			},
@@ -68,7 +71,8 @@ export function UpdateActions(self) {
 		options: [
 			{
 				id: 'cuelist',
-				type: 'number',
+				type: 'textinput',
+				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
 			},
@@ -83,7 +87,8 @@ export function UpdateActions(self) {
 		options: [
 			{
 				id: 'cuelist',
-				type: 'number',
+				type: 'textinput',
+				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
 			},
