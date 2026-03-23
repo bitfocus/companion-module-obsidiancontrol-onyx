@@ -63,7 +63,7 @@ export function createTelnetClient(self) {
 
 	self.socket.on('error', (err) => {
 		self.log('error', 'Error with connection to console: ' + err.message)
-		self.updateStatus(InstanceStatus.UnknownError, err.message)
+		self.updateStatus(InstanceStatus.ConnectionFailure)
 		// reconnection logic
 	})
 
