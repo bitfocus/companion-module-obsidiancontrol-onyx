@@ -9,7 +9,8 @@ export function UpdateActions(self) {
 		options: [
 			{
 				id: 'cuelist',
-				type: 'number',
+				type: 'textinput',
+				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
 			},
