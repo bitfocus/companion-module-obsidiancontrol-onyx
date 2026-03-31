@@ -20,6 +20,7 @@ function getActiveCuelists(self) {
 // Function to parse incoming data
 function parseData(self, buffer) {
 	const data = buffer.toString('utf8')
+	self.log('debug', `Received data: ${data}`)
 	self.buffer += data
 
 	const lines = self.buffer.split(/\r?\n/)
@@ -31,7 +32,6 @@ function parseData(self, buffer) {
 			self.checkFeedbacks('ActiveCuelist') // Update feedbacks after active cuelist data received
 		}
 	}
-	self.log('debug', `Received data: ${data}`)
 	self.checkFeedbacks('cuelist_active')
 }
 

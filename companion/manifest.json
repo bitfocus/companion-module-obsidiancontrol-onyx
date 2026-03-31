@@ -3,7 +3,7 @@
 	"name": "obsidiancontrol-onyx",
 	"shortname": "onyx",
 	"description": "A Companion module to control Onyx lighting systems",
-	"version": "2.0.0",
+	"version": "0.0.0",
 	"license": "MIT",
 	"type": "connection",
 	"repository": "git+https://github.com/bitfocus/companion-module-obsidiancontrol-onyx.git",
