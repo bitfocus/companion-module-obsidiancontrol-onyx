@@ -122,7 +122,7 @@ export function UpdateActions(self) {
 			if (self.config.usingManager) {
 				sendCommand(`GSC ${event.options.schedule}`, self)
 			} else {
-				self.log('info', 'Module not set up to use ONYX Manager. Please check config.')
+				self.log('warn', 'Module not set up to use ONYX Manager. Please check config.')
 			}
 		},
 	}

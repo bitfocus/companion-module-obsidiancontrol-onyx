@@ -3,7 +3,7 @@ import { configFields } from './src/config.js'
 import { upgradeScripts } from './src/upgrades.js'
 import { createTelnetClient } from './src/telnet/client.js'
 import { UpdateActions } from './src/actions.js'
-// import { UpdateVariableDefinitions } from './src/variables.js'
+import { UpdateVariableDefinitions } from './src/variables.js'
 // import { UpdatePresetDefinitions } from './src/presets.js'
 import { UpdateFeedbacks } from './src/feedbacks.js'
 
@@ -23,7 +23,7 @@ class ModuleInstance extends InstanceBase {
 
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
-		// this.updateVariableDefinitions() // export variable definitions
+		this.updateVariableDefinitions() // export variable definitions
 		// this.updatePresetDefinitions()
 	}
 
@@ -45,6 +45,9 @@ class ModuleInstance extends InstanceBase {
 		}
 
 		this.config = config
+		this.setVariableValues({
+			usingManager: this.config.usingManager,
+		})
 
 		// Create Telnet client
 		if (this.config.host) {
@@ -65,9 +68,9 @@ class ModuleInstance extends InstanceBase {
 		UpdateFeedbacks(this)
 	}
 
-	// updateVariableDefinitions() {
-	// 	UpdateVariableDefinitions(this)
-	// }
+	updateVariableDefinitions() {
+		UpdateVariableDefinitions(this)
+	}
 
 	// updatePresetDefinitions() {
 	// 	UpdatePresetDefinitions(this)
