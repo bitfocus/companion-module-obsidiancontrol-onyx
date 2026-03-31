@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "format": "prettier -w .",
-    "package": "companion-module-build"
+    "package": "companion-module-build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
   "repository": {
