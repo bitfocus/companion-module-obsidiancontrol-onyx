@@ -25,7 +25,7 @@ function parseData(self, buffer) {
 	for (const line of lines) {
 		if (line === '.') {
 			self.buffer = ''
-		} else if (!isNaN(parseInt(line))) {
+		} else if (!isNaN(parseInt(line)) && parseInt(line) != 200) {
 			self.activeCuelists.push(parseInt(line))
 			self.setVariableValues({
 				activeCuelists: self.activeCuelists
