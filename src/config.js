@@ -7,7 +7,12 @@ export const configFields = [
 		width: 12,
 		label: 'Information',
 		value:
-			'This module allows control of Onyx lighting consoles and PC setups using Telnet. Onyx has two different Telnet server setups, one through the lighting software itself and a second through a bundled utility called Onyx Manager. The Telnet capabilities of each are slightly different, and this module offers the capabilities of both, although you will need to enable both servers (on seperate ports) to make full use of this module.',
+			'This module allows control of Onyx lighting consoles and PC setups using Telnet. ' +
+			'Onyx has two different Telnet servers, one through the lighting software itself ' +
+			'and a second through a bundled utility called Onyx Manager. ' +
+			'It is recommended to use the built-in Telnet server (default port 23) for most actions ' +
+			'and use a second instance of this module with Onyx Manager (default port 2323) if access ' +
+			'to Onyx Manager\'s scheduler is required. '
 	},
 	{
 		type: 'textinput',
@@ -22,19 +27,21 @@ export const configFields = [
 		label: 'Port',
 		width: 6,
 		regex: Regex.PORT,
-		default: '2323',
+		default: '23',
 	},
 	{
 		type: 'checkbox',
 		id: 'usingManager',
-		label: 'Check if using ONYX Manager',
+		label: 'Using ONYX Manager',
+		default: false,
 		disableAutoExpression: true,
 	},
 	{
-		type: 'number',
+		type: 'textinput',
 		id: 'polling_interval',
 		label: 'Polling Interval (ms)',
 		width: 4,
+		isVisibleExpression: `$(options:usingManager) == true`,
 		regex: Regex.NUMBER,
 		default: 5000,
 		min: 100,
