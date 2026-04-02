@@ -114,7 +114,8 @@ export function UpdateActions(self) {
 		options: [
 			{
 				id: 'schedule',
-				type: 'number',
+				type: 'textinput',
+				useVariables: true,
 				label: 'Schedule Number',
 				default: 1,
 			},
