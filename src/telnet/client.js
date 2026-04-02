@@ -12,9 +12,7 @@ export async function sendCommand(cmd, self) {
 
 function getActiveCuelists(self) {
 	self.activeCuelists = []
-	if (self.socket && self.socket.isConnected) {
-		sendCommand('QLActive', self)
-	}
+	sendCommand('QLActive', self)
 }
 
 // Function to parse incoming data
@@ -29,10 +27,12 @@ function parseData(self, buffer) {
 			self.buffer = ''
 		} else if (!isNaN(parseInt(line))) {
 			self.activeCuelists.push(parseInt(line))
+			self.setVariableValues({
+				activeCuelists: self.activeCuelists
+			})
 			self.checkFeedbacks('ActiveCuelist') // Update feedbacks after active cuelist data received
 		}
 	}
-	self.checkFeedbacks('cuelist_active')
 }
 
 // Create new TCP/Telnet socket and attempt to connect
