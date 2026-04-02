@@ -27,6 +27,7 @@ export function UpdateActions(self) {
 				type: 'static-text',
 				id: 'info',
 				width: 12,
+				isVisibleExpression: `${self.config.usingManager == true}`,
 				label: 'Information',
 				value:
 					'Point cue recall (i.e. cue 1.8) not supported while connected using ONYX Manager. See the module help for more info.',

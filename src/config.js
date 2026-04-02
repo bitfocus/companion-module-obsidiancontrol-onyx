@@ -28,6 +28,7 @@ export const configFields = [
 		type: 'checkbox',
 		id: 'usingManager',
 		label: 'Check if using ONYX Manager',
+		disableAutoExpression: true,
 	},
 	{
 		type: 'number',
