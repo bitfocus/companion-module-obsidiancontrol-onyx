@@ -4,7 +4,7 @@ import { upgradeScripts } from './src/upgrades.js'
 import { createTelnetClient } from './src/telnet/client.js'
 import { UpdateActions } from './src/actions.js'
 import { UpdateVariableDefinitions } from './src/variables.js'
-// import { UpdatePresetDefinitions } from './src/presets.js'
+import { UpdatePresetDefinitions } from './src/presets.js'
 import { UpdateFeedbacks } from './src/feedbacks.js'
 
 class ModuleInstance extends InstanceBase {
@@ -24,7 +24,7 @@ class ModuleInstance extends InstanceBase {
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
-		// this.updatePresetDefinitions()
+		this.updatePresetDefinitions()
 	}
 
 	// When module gets deleted or deactivated
@@ -73,9 +73,9 @@ class ModuleInstance extends InstanceBase {
 		UpdateVariableDefinitions(this)
 	}
 
-	// updatePresetDefinitions() {
-	// 	UpdatePresetDefinitions(this)
-	// }
+	updatePresetDefinitions() {
+		UpdatePresetDefinitions(this)
+	}
 }
 
 runEntrypoint(ModuleInstance, upgradeScripts)
