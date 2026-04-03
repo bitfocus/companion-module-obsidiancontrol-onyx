@@ -167,7 +167,7 @@ export function UpdateActions(self) {
 	}
 
 	actions.releaseAll = {
-		name: 'Release All Cuelists and Overides',
+		name: 'Release All Cuelists and Overrides',
 		callback: async () => {
 			sendCommand('RAQLO', self)
 		},
