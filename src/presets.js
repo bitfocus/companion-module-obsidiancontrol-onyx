@@ -22,11 +22,11 @@ export function UpdatePresetDefinitions(self) {
 	}
 
 	presets['releaseCuelists'] = {
-		name: `Rel Cuelists`,
+		name: `Release Cuelists`,
 		category: 'Clear/Release',
 		type: 'button',
 		style: {
-			text: 'Rel Cuelists',
+			text: 'Release\nCuelists',
 			size: 18,
 			color: colors.black,
 			bgcolor: colors.red,
@@ -39,30 +39,30 @@ export function UpdatePresetDefinitions(self) {
 		],
 	}
 
-	presets['releaseOverides'] = {
-		name: `Rel Overides`,
+	presets['releaseOverrides'] = {
+		name: `Release Overrides`,
 		category: 'Clear/Release',
 		type: 'button',
 		style: {
-			text: 'Rel Overides',
+			text: 'Release\nOverrides',
 			size: 18,
 			color: colors.black,
 			bgcolor: colors.red,
 		},
 		steps: [
 			{
-				down: [{ actionId: 'releaseOverides' , options: {} }],
+				down: [{ actionId: 'releaseOverrides' , options: {} }],
 				up: []
 			},
 		],
 	}
 
 	presets['releaseCuelistsDimFirst'] = {
-		name: `Rel Cuelists/Dim`,
+		name: `Release Cuelists/Dim First`,
 		category: 'Clear/Release',
 		type: 'button',
 		style: {
-			text: 'Rel Cuelists/Dim',
+			text: 'Rel Cue\nDimFir',
 			size: 18,
 			color: colors.black,
 			bgcolor: colors.red,
@@ -76,11 +76,11 @@ export function UpdatePresetDefinitions(self) {
 	}
 
 	presets['releaseAll'] = {
-		name: `Rel All`,
+		name: `Release All`,
 		category: 'Clear/Release',
 		type: 'button',
 		style: {
-			text: 'Rel All',
+			text: 'Release\nAll',
 			size: 18,
 			color: colors.black,
 			bgcolor: colors.red,

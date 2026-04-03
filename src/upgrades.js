@@ -15,7 +15,7 @@ export const upgradeScripts = [
 			// Update action IDs
 			switch(action.actionId) {
 				case 'release_all_overrides':
-					action.actionId = 'releaseOverides'
+					action.actionId = 'releaseOverrides'
 					result.updatedActions.push(action)
 					break
 				case 'release_all_cl':

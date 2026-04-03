@@ -113,6 +113,15 @@ export function UpdateActions(self) {
 		name: 'Go Schedule (ONYX Manager)',
 		options: [
 			{
+				type: 'static-text',
+				id: 'info',
+				width: 12,
+				isVisibleExpression: `${self.config.usingManager == false}`,
+				label: 'Warning',
+				value:
+					'Module not set up to use ONYX Manager. Please check module config.',
+			},
+			{
 				id: 'schedule',
 				type: 'textinput',
 				useVariables: true,
@@ -121,11 +130,7 @@ export function UpdateActions(self) {
 			},
 		],
 		callback: async (event) => {
-			if (self.config.usingManager) {
-				sendCommand(`GSC ${event.options.schedule}`, self)
-			} else {
-				self.log('warn', 'Module not set up to use ONYX Manager. Please check config.')
-			}
+			sendCommand(`GSC ${event.options.schedule}`, self)
 		},
 	}
 
@@ -138,8 +143,8 @@ export function UpdateActions(self) {
 	}
 
 	// General release actions
-	actions.releaseOverides = {
-		name: 'Release All Overides',
+	actions.releaseOverrides = {
+		name: 'Release All Overrides',
 		callback: async () => {
 			sendCommand('RAO', self)
 		},
