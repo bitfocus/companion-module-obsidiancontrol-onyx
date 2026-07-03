@@ -53,7 +53,7 @@ export function UpdateActions(self) {
 	}
 
 	actions.pauseCuelist = {
-		name: 'Pause Cuelist',
+		name: 'Pause/Go Back Cuelist',
 		options: [
 			{
 				id: 'cuelist',
