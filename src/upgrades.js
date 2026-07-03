@@ -3,7 +3,7 @@ export const upgradeScripts = [
 	 * Place your upgrade scripts here
 	 * Remember that once it has been added it cannot be removed!
 	 */
-	function updateIDs (context, props) {
+	function v2_0_0 (context, props) {
 		const result = {
 		updatedConfig: null,
 		updatedSecrets: null,
