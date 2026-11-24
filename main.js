@@ -1,7 +1,7 @@
 import { InstanceBase, InstanceStatus, runEntrypoint } from '@companion-module/base'
 import { configFields } from './src/config.js'
 import { upgradeScripts } from './src/upgrades.js'
-import { createTelnetClient } from './src/telnet/client.js'
+import { createTelnetClient } from './src/core/client.js'
 import { UpdateActions } from './src/actions.js'
 import { UpdateVariableDefinitions } from './src/variables.js'
 import { UpdatePresetDefinitions } from './src/presets.js'
