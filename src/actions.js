@@ -1,4 +1,4 @@
-import { sendCommand } from './telnet/client.js'
+import { sendCommand } from './core/client.js'
 
 export function UpdateActions(self) {
 	let actions = {}
