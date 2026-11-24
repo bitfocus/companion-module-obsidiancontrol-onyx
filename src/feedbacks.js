@@ -1,4 +1,4 @@
-import { colors } from './utility/colors.js'
+import { colors } from './core/colors.js'
 
 export async function UpdateFeedbacks(self) {
 	self.setFeedbackDefinitions({

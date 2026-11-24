@@ -1,4 +1,4 @@
-import { colors } from './utility/colors.js'
+import { colors } from './core/colors.js'
 
 export function UpdatePresetDefinitions(self) {
 	const presets = {}
