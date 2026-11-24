@@ -1,6 +1,6 @@
 {
   "name": "obsidiancontrol-onyx",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "main.js",
   "type": "module",
   "scripts": {
@@ -14,12 +14,12 @@
     "url": "git+https://github.com/bitfocus/companion-module-obsidiancontrol-onyx.git"
   },
   "engines": {
-    "node": "^22.20",
+    "node": "^26",
     "yarn": "^4"
   },
   "packageManager": "yarn@4.13.0",
   "dependencies": {
-    "@companion-module/base": "~1.14.1"
+    "@companion-module/base": "~1.15.0"
   },
   "devDependencies": {
     "@companion-module/tools": "^2.8.0",
