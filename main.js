@@ -46,9 +46,6 @@ class ModuleInstance extends InstanceBase {
 
 		this.config = config
 		this.updateActions() // export actions
-		this.setVariableValues({
-			usingManager: this.config.usingManager,
-		})
 
 		// Create Telnet client
 		if (this.config.host) {
