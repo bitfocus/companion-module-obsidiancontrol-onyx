@@ -1,5 +1,8 @@
 import { InstanceStatus, TelnetHelper } from '@companion-module/base'
 
+const payloadRegex = /200 Ok\r\n([\s\S]*?)\r\n.\r\n/
+const cueRegex = /^(\d+)\s+-\s+(.+)$/
+
 // Function to send Telnet command to Onyx console
 export async function sendCommand(cmd, self) {
 	try {
@@ -15,23 +18,32 @@ function getActiveCuelists(self) {
 	sendCommand('QLActive', self)
 }
 
-// Function to parse incoming data
+/** Parses incoming data from Onyx Manager */
 function parseData(self, buffer) {
 	const data = buffer.toString('utf8')
 	self.log('debug', `Received data: ${data}`)
-	self.buffer += data
 
-	const lines = self.buffer.split(/\r?\n/)
-	for (const line of lines) {
-		if (line === '.') {
-			self.buffer = ''
-		} else if (!isNaN(parseInt(line)) && parseInt(line) != 200) {
-			self.activeCuelists.push(parseInt(line))
-			self.setVariableValues({
-				activeCuelists: self.activeCuelists
+	const match = data.match(payloadRegex)
+	if (match) {
+		const content = match[1]
+
+		if (content === 'No Active Qlist in List') {
+			self.activeCuelists = []
+		} else {
+			const cueLists = content.split('\r\n')
+			self.activeCuelists = []
+			cueLists.forEach((l) => {
+				const cueMatch = l.match(cueRegex)
+				if (cueMatch) {
+					const cueNumber = parseInt(cueMatch[1])
+					self.activeCuelists.push(cueNumber)
+				}
 			})
-			self.checkFeedbacks('ActiveCuelist') // Update feedbacks after active cuelist data received
 		}
+		self.setVariableValues({
+			activeCuelists: self.activeCuelists
+		})
+		self.checkFeedbacks('ActiveCuelist')
 	}
 }
 
