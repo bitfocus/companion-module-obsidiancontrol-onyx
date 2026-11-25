@@ -13,6 +13,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -38,6 +39,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 			{
 				id: 'cue',
@@ -61,6 +63,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -77,6 +80,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -93,6 +97,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 			{
 				id: 'level',
@@ -126,6 +131,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Schedule Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -152,7 +158,7 @@ export function UpdateActions(self) {
 	actions.releaseCuelists = {
 		name: 'Release All Cuelists',
 		options: [],
-		callback: async (event) => {
+		callback: async () => {
 			sendCommand('RAQL', self)
 		},
 	}
@@ -160,7 +166,7 @@ export function UpdateActions(self) {
 	actions.releaseCuelistsDimFirst = {
 		name: 'Release All Cuelists Dimmer First',
 		options: [],
-		callback: async (event) => {
+		callback: async () => {
 			sendCommand('RAQLDF', self)
 		},
 	}

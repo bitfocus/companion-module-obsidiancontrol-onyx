@@ -16,6 +16,7 @@ export async function UpdateFeedbacks(self) {
 					label: 'Cuelist',
 					default: 1,
 					min: 1,
+					asInteger: true,
 				},
 			],
 			callback: (feedback) => {
