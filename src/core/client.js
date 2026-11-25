@@ -13,37 +13,26 @@ export async function sendCommand(cmd, self) {
 	}
 }
 
-function getActiveCuelists(self) {
-	self.activeCuelists = []
-	sendCommand('QLActive', self)
-}
-
 /** Parses incoming data from Onyx Manager */
-function parseData(self, buffer) {
-	const data = buffer.toString('utf8')
-	self.log('debug', `Received data: ${data}`)
-
+function parseData(data) {
 	const match = data.match(payloadRegex)
 	if (match) {
 		const content = match[1]
 
 		if (content === 'No Active Qlist in List') {
-			self.activeCuelists = []
+			return []
 		} else {
 			const cueLists = content.split('\r\n')
-			self.activeCuelists = []
+			let activeCuelists = []
 			cueLists.forEach((l) => {
 				const cueMatch = l.match(cueRegex)
 				if (cueMatch) {
 					const cueNumber = parseInt(cueMatch[1])
-					self.activeCuelists.push(cueNumber)
+					activeCuelists.push(cueNumber)
 				}
 			})
+			return activeCuelists
 		}
-		self.setVariableValues({
-			activeCuelists: self.activeCuelists,
-		})
-		self.checkFeedbacks('ActiveCuelist')
 	}
 }
 
@@ -68,7 +57,7 @@ export function createTelnetClient(self) {
 
 			self.log('debug', `Polling interval: ${self.config.polling_interval}`)
 			self.pollTimer = setInterval(() => {
-				getActiveCuelists(self)
+				sendCommand('QLActive', self)
 			}, self.config.polling_interval)
 		}
 	})
@@ -88,6 +77,14 @@ export function createTelnetClient(self) {
 	})
 
 	self.socket.on('data', (buffer) => {
-		parseData(self, buffer)
+		const data = buffer.toString('utf8')
+		self.log('debug', `Received data: ${data}`)
+
+		self.activeCuelists = parseData(data)
+
+		self.setVariableValues({
+			activeCuelists: self.activeCuelists,
+		})
+		self.checkFeedbacks('ActiveCuelist')
 	})
 }
