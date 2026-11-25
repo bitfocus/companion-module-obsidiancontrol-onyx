@@ -41,7 +41,7 @@ function parseData(self, buffer) {
 			})
 		}
 		self.setVariableValues({
-			activeCuelists: self.activeCuelists
+			activeCuelists: self.activeCuelists,
 		})
 		self.checkFeedbacks('ActiveCuelist')
 	}

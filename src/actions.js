@@ -118,8 +118,7 @@ export function UpdateActions(self) {
 				width: 12,
 				isVisibleExpression: `${self.config.usingManager == false}`,
 				label: 'Warning',
-				value:
-					'Module not set up to use ONYX Manager. Please check module config.',
+				value: 'Module not set up to use ONYX Manager. Please check module config.',
 			},
 			{
 				id: 'schedule',
