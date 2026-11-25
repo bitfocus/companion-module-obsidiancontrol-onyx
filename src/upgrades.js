@@ -3,17 +3,17 @@ export const upgradeScripts = [
 	 * Place your upgrade scripts here
 	 * Remember that once it has been added it cannot be removed!
 	 */
-	function v2_0_0 (context, props) {
+	function v2_0_0(context, props) {
 		const result = {
-		updatedConfig: null,
-		updatedSecrets: null,
-		updatedActions: [],
-		updatedFeedbacks: [],
+			updatedConfig: null,
+			updatedSecrets: null,
+			updatedActions: [],
+			updatedFeedbacks: [],
 		}
 
 		for (const action of props.actions) {
 			// Update action IDs
-			switch(action.actionId) {
+			switch (action.actionId) {
 				case 'release_all_overrides':
 					action.actionId = 'releaseOverrides'
 					result.updatedActions.push(action)
@@ -60,7 +60,7 @@ export const upgradeScripts = [
 		}
 
 		for (const feedback of props.feedbacks) {
-			if (feedback.feedbackId = 'cuelist_active') {
+			if ((feedback.feedbackId = 'cuelist_active')) {
 				feedback.feedbackId = 'ActiveCuelist'
 				result.updatedFeedbacks.push(feedback)
 			}

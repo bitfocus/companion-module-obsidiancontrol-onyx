@@ -1,5 +1,8 @@
 import { InstanceStatus, TelnetHelper } from '@companion-module/base'
 
+const payloadRegex = /200 Ok\r\n([\s\S]*?)\r\n.\r\n/
+const cueRegex = /^(\d+)\s+-\s+(.+)$/
+
 // Function to send Telnet command to Onyx console
 export async function sendCommand(cmd, self) {
 	try {
@@ -10,27 +13,25 @@ export async function sendCommand(cmd, self) {
 	}
 }
 
-function getActiveCuelists(self) {
-	self.activeCuelists = []
-	sendCommand('QLActive', self)
-}
+/** Parses incoming data from Onyx Manager */
+function parseData(data) {
+	const match = data.match(payloadRegex)
+	if (match) {
+		const content = match[1]
 
-// Function to parse incoming data
-function parseData(self, buffer) {
-	const data = buffer.toString('utf8')
-	self.log('debug', `Received data: ${data}`)
-	self.buffer += data
-
-	const lines = self.buffer.split(/\r?\n/)
-	for (const line of lines) {
-		if (line === '.') {
-			self.buffer = ''
-		} else if (!isNaN(parseInt(line)) && parseInt(line) != 200) {
-			self.activeCuelists.push(parseInt(line))
-			self.setVariableValues({
-				activeCuelists: self.activeCuelists
+		if (content === 'No Active Qlist in List') {
+			return []
+		} else {
+			const cueLists = content.split('\r\n')
+			let activeCuelists = []
+			cueLists.forEach((l) => {
+				const cueMatch = l.match(cueRegex)
+				if (cueMatch) {
+					const cueNumber = parseInt(cueMatch[1])
+					activeCuelists.push(cueNumber)
+				}
 			})
-			self.checkFeedbacks('ActiveCuelist') // Update feedbacks after active cuelist data received
+			return activeCuelists
 		}
 	}
 }
@@ -56,7 +57,7 @@ export function createTelnetClient(self) {
 
 			self.log('debug', `Polling interval: ${self.config.polling_interval}`)
 			self.pollTimer = setInterval(() => {
-				getActiveCuelists(self)
+				sendCommand('QLActive', self)
 			}, self.config.polling_interval)
 		}
 	})
@@ -76,6 +77,14 @@ export function createTelnetClient(self) {
 	})
 
 	self.socket.on('data', (buffer) => {
-		parseData(self, buffer)
+		const data = buffer.toString('utf8')
+		self.log('debug', `Received data: ${data}`)
+
+		self.activeCuelists = parseData(data)
+
+		self.setVariableValues({
+			activeCuelists: self.activeCuelists,
+		})
+		self.checkFeedbacks('ActiveCuelist')
 	})
 }

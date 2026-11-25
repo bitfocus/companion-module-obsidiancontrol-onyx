@@ -1,4 +1,4 @@
-import { colors } from './utility/colors.js'
+import { colors } from './core/colors.js'
 
 export function UpdatePresetDefinitions(self) {
 	const presets = {}
@@ -15,8 +15,8 @@ export function UpdatePresetDefinitions(self) {
 		},
 		steps: [
 			{
-				down: [{ actionId: 'clearProgrammer' , options: {} }],
-				up: []
+				down: [{ actionId: 'clearProgrammer', options: {} }],
+				up: [],
 			},
 		],
 	}
@@ -33,8 +33,8 @@ export function UpdatePresetDefinitions(self) {
 		},
 		steps: [
 			{
-				down: [{ actionId: 'releaseCuelists' , options: {} }],
-				up: []
+				down: [{ actionId: 'releaseCuelists', options: {} }],
+				up: [],
 			},
 		],
 	}
@@ -51,8 +51,8 @@ export function UpdatePresetDefinitions(self) {
 		},
 		steps: [
 			{
-				down: [{ actionId: 'releaseOverrides' , options: {} }],
-				up: []
+				down: [{ actionId: 'releaseOverrides', options: {} }],
+				up: [],
 			},
 		],
 	}
@@ -69,8 +69,8 @@ export function UpdatePresetDefinitions(self) {
 		},
 		steps: [
 			{
-				down: [{ actionId: 'releaseCuelistsDimFirst' , options: {} }],
-				up: []
+				down: [{ actionId: 'releaseCuelistsDimFirst', options: {} }],
+				up: [],
 			},
 		],
 	}
@@ -87,8 +87,8 @@ export function UpdatePresetDefinitions(self) {
 		},
 		steps: [
 			{
-				down: [{ actionId: 'releaseAll' , options: {} }],
-				up: []
+				down: [{ actionId: 'releaseAll', options: {} }],
+				up: [],
 			},
 		],
 	}

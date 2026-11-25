@@ -1,4 +1,4 @@
-import { sendCommand } from './telnet/client.js'
+import { sendCommand } from './core/client.js'
 
 export function UpdateActions(self) {
 	let actions = {}
@@ -13,6 +13,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -38,6 +39,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 			{
 				id: 'cue',
@@ -61,6 +63,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -77,6 +80,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -93,6 +97,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Cuelist Number',
 				default: 1,
+				asInteger: true,
 			},
 			{
 				id: 'level',
@@ -118,8 +123,7 @@ export function UpdateActions(self) {
 				width: 12,
 				isVisibleExpression: `${self.config.usingManager == false}`,
 				label: 'Warning',
-				value:
-					'Module not set up to use ONYX Manager. Please check module config.',
+				value: 'Module not set up to use ONYX Manager. Please check module config.',
 			},
 			{
 				id: 'schedule',
@@ -127,6 +131,7 @@ export function UpdateActions(self) {
 				useVariables: true,
 				label: 'Schedule Number',
 				default: 1,
+				asInteger: true,
 			},
 		],
 		callback: async (event) => {
@@ -153,7 +158,7 @@ export function UpdateActions(self) {
 	actions.releaseCuelists = {
 		name: 'Release All Cuelists',
 		options: [],
-		callback: async (event) => {
+		callback: async () => {
 			sendCommand('RAQL', self)
 		},
 	}
@@ -161,7 +166,7 @@ export function UpdateActions(self) {
 	actions.releaseCuelistsDimFirst = {
 		name: 'Release All Cuelists Dimmer First',
 		options: [],
-		callback: async (event) => {
+		callback: async () => {
 			sendCommand('RAQLDF', self)
 		},
 	}

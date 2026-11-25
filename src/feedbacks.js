@@ -1,4 +1,4 @@
-import { colors } from './utility/colors.js'
+import { colors } from './core/colors.js'
 
 export async function UpdateFeedbacks(self) {
 	self.setFeedbackDefinitions({
@@ -16,6 +16,7 @@ export async function UpdateFeedbacks(self) {
 					label: 'Cuelist',
 					default: 1,
 					min: 1,
+					asInteger: true,
 				},
 			],
 			callback: (feedback) => {
